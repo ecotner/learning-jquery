@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        window.onload = function () {
+            alert("Window loaded");
+        }
+
+        $(document).ready(function () {
+            alert("Document loaded");
+            $("#some-text").html("jQuery is siiick");
+        })
+    </script>
+    </head>
+    <body>
+        <h1 id="some-text">Hello world</h1>
+    </body>
+</html>
