@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+        <!-- some divs -->
+        <div>Div 1</div>
+        <div id="myDiv">Div 2</div>
+        <div class="myDiv">Div 3</div>
+        <div some-attribute="yeahhh">Div 4</div>
+        <!-- some input types -->
+        <input type="time">
+        <input type="text">
+        <button>Click me!</button>
+        <!-- some text -->
+        <h3>A comment</h3>
+        <h3>A better comment</h3>
+        <!-- a table -->
+        <table>
+            <tr><td>Row 0</td></tr>
+            <tr><td>Row 1</td></tr>
+            <tr><td>Row 2</td></tr>
+            <tr><td>Row 3</td></tr>
+            <tr><td>Row 4</td></tr>
+        </table>
+        <!-- some spans in a div -->
+        <div style="display: flex; flex-direction: column;">
+            <span>First child</span>
+            <span>Second child</span>
+            <span>Third child</span>
+            <span>Fourth child</span>
+        </div>
+    </body>
+    <script>
+        $(document).ready(function () {
+            // be careful when using some of these selectors; there are performance implications
+            // in particular, searching by id is very fast because it is hashed, but the others slower because it needs to scan the whole DOM
+            $("div").css("border", "solid 2px red"); // select by tag name
+            $("#myDiv").css("border", "solid 2px blue"); // select by id
+            $(".myDiv").css("border", "solid 2px green"); // select by class
+            $("div[some-attribute=yeahhh]").css("border", "solid 2px black"); // select by attribute
+            $(":input").css("border", "solid 2px pink"); // select all input types (input, select, button, textarea, etc)
+            $("input[type=text]").css("border", "solid 5px red").val("some default text"); // select input tag with text type
+            $("h3:contains('comment')").css("border", "dashed 2px orange"); // select tag with inner HTML matching string
+            $("tr:odd").css("background-color", "black").css("color", "white"); // select even/odd rows of a table
+            $("tr:even").css("background-color", "yellow");
+            $("span:first-child").css("border", "dashed 2px blue");
+            $("span:last-child").css("border", "dashed 2px green");
+            $("span:nth-child(2)").css("border", "dashed 2px magenta");
+            // not gonna go through the rest, but it's basically matching on substrings of attribute values using regex-like syntax (^=, *=, $=)
+        })
+    </script>
+</html>
