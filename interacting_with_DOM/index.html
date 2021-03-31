@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .asdf {background-color: black; color: yellow} /* use this later to apply a class to an element */
+        </style>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            function randRGB() { // generate random RGB values
+                let colors = [];
+                for (var i=0; i<3; i++) {
+                    colors.push(Math.floor(256*Math.random()));
+                }
+                return `rgb(${colors.join(',')})`
+            }
+        </script>
+    </head>
+    <body>
+        <div>Div 1</div>
+        <div>Div 2</div>
+        <div>Div 3</div>
+        <h3>Some title</h3>
+        <h3>A title to be deleted</h3>
+    </body>
+    <script>
+        $(document).ready(function () {
+            // use .each() to apply function to each element in an array
+            $("div").each(function (index) {
+                $(this).html("Div " + index);
+            });
+            // use method on jQuery object array to update attributes of each element in array, WITHOUT having to iterate explicitly
+            let divs = $("div");
+            divs.attr({ // set multiple attributes at once
+                title: "title a div...?",
+                style: "border: 2px solid black"
+            });
+            divs.css("background-color", randRGB);
+            // append/prepend nodes to parent (also has *To variants)
+            $("body").append("<h3>New appended title</h3>");
+            $("<div>New first div -1</div>").prependTo("body");
+            // can also wrap elements inside new tags
+            $("h3").wrap("<div id='wrapper'/>");
+            $("#wrapper").css("border", "2px solid red");
+            // delete/remove nodes
+            $("h3:contains(delete)").remove();
+            // chain methods
+            $("h3:contains(New)").attr({title: "hover popup description"}).css({
+                "background-color": "purple",
+                "color": "white"
+            })
+            // modify CSS classes!
+            $("h3:contains(Some title)").addClass("asdf")
+        })
+    </script>
+</html>
