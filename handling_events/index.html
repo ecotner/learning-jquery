@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <style>
+            .div1-style { background-color: gold !important; cursor: wait;}
+            .div2-style { background-color: purple !important; cursor: crosshair;}
+            table tr td {border: 1px solid black; background-color: gray;}
+            .highlight {background-color: yellow !important;}
+        </style>
+    </head>
+    <body>
+        <button id="btn1">Button 1</button>
+        <select id="sel1">
+            <option>Option 1</option>
+            <option>Option 2</option>
+        </select>
+        <h3 id="coord-text">Click first div to get coordinates</h3>
+        <div id="div1" style="width: 100px; height: 100px; background-color: blue;"></div>
+        <h3>Clicking the next div removes the mouseenter/mouseleave event listeners</h3>
+        <div id="div2" style="width: 100px; height: 100px; background-color: red;"></div>
+        <h3 id="table-select">Click table to select data</h3>
+        <table id="table" style="width: 100px; border: 1px solid black;">
+            <tr>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>6</td>
+            </tr>
+        </table>
+    </body>
+    <script>
+        // add listener for "click" event to button
+        $("#btn1").click(function(){
+            alert("Clicked button 1");
+        })
+        // add listener for "change" event to dropdown select
+        $("#sel1").change(function(){
+            let option = $(this).val();
+            alert(`Selected ${option}!`)
+        })
+        // chain multiple listeners for mouse enter/leave/click on div
+        // could also use the .hover() method instead of chaining .mouseenter/.mouseleave
+        // there is also a "click" equivalent to .hover() called .toggle()
+        $("#div1").mouseenter(function(){
+            $(this).addClass("div1-style");
+        }).mouseleave(function(){
+            $(this).removeClass("div1-style");
+        }).click(function(e){
+            $("#coord-text").html(`X: ${e.pageX}, Y: ${e.pageY}`)
+        })
+        // use on to add multiple event listeners
+        $("#div2").on("mouseenter mouseleave", function(){
+            $(this).toggleClass("div2-style") // use toggleClass instead of add/removeClass
+        })
+        // use off to remove event listeners
+        $("#div2").click(function(){
+            $(this).off("mouseenter mouseleave")
+        })
+        // attach single listener to parent and have event bubble up
+        // here we are attaching the event to the <table> element, and when you click on a <td>,
+        // the event bubbles up to the parent, even though it's not defined on the <td>
+        $("#table").on("click", "td", function(){
+            let selection = $(this).html()
+            $("#table-select").html(`You selected: ${selection}`)
+        }).on("mouseenter mouseleave", "td", function(){
+            $(this).toggleClass("highlight")
+        })
+    </script>
+</html>
