@@ -16,12 +16,13 @@ app.add_middleware(
 def root():
     return {"status": "ok", "message": "Hello world!"}
 
-class AdditionModel(BaseModel):
+class TwoNumbers(BaseModel):
+    """It's just two numbers lol"""
     num1: float
     num2: float
 
 @app.post("/add/")
-def add_numbers(numbers: AdditionModel):
+def add_numbers(numbers: TwoNumbers):
     num1 = numbers.num1
     num2 = numbers.num2
     return {"status": "ok", "result": num1 + num2}
