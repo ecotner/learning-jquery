@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+        <div id="content-div"></div>
+        <button id="get-btn">Click to make GET request</button>
+        <button id="post-btn">Click to make POST request</button>
+        <form>
+            <input type="number" id="num1"> +
+            <input type="number" id="num2"> =
+            <span id="add-output"></span>
+        </form>
+    </body>
+    <script>
+        // load some HTML from a different URL and and replace the inner HTML
+        // of the selector element with it. this is not super efficient if you
+        // only need a small part of the whole document though
+        let contentDiv = $("#content-div")
+        contentDiv.load("extras.html #blue-box")
+        // load some content using a GET request
+        $("#get-btn").click(() => {
+            $.get("http://localhost:3000", function(data){
+                data = JSON.stringify(data)
+                let text = `<p>Response from server: "${data}"</p>`
+                $(text).insertAfter($("#get-btn"))
+            })
+        })
+        // load some content using a POST request
+        $("#post-btn").click(function(){
+            let payload = JSON.stringify({
+                num1: $("#num1").val(),
+                num2: $("#num2").val()
+            })
+            $.post("http://localhost:3000/add", payload, function(data){
+                let result = data["result"]
+                $("#add-output").html(result)
+            })
+        })
+    </script>
+</html>
